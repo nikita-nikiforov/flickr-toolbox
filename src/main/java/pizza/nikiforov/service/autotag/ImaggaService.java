@@ -1,4 +1,4 @@
-package pizza.nikiforov.service;
+package pizza.nikiforov.service.autotag;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 public class ImaggaService {
     private final RestTemplate restTemplate;
     private final ImaggaProperties imaggaProperties;
+
     private String tagsEndpoint = "https://api.imagga.com/v2/tags";
 
     public TagsResponse getImaggaTagsResponse(String imageUrl) {

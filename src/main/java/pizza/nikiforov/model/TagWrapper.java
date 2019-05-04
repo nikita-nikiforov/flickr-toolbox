@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Tag {
+public class TagWrapper {
     private double confidence;
     private TagValue tag;
 }

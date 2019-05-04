@@ -10,5 +10,5 @@ import java.util.List;
 @Setter
 @ToString
 public class TagsResult {
-    private List<Tag> tags;
+    private List<TagWrapper> tags;
 }

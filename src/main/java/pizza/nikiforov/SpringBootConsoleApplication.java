@@ -1,26 +1,26 @@
 package pizza.nikiforov;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import pizza.nikiforov.service.ConsoleService;
+import pizza.nikiforov.service.autotag.AutotagService;
 
 @SpringBootApplication
+@RequiredArgsConstructor
 @Log4j2
 public class SpringBootConsoleApplication implements CommandLineRunner {
-    @Autowired
-    private ConsoleService consoleService;
+    private final AutotagService autotagService;
 
     @Override
-    public void run(String... args) throws Exception {
-        consoleService.start();
+    public void run(String... args) {
+        autotagService.start();
     }
 
     public static void main(String[] args) {
-        log.info("STARTING THE APPLICATION");
+        log.info("Application started.");
         SpringApplication.run(SpringBootConsoleApplication.class, args);
-        log.info("APPLICATION FINISHED");
+        log.info("Application finished.");
     }
 }
