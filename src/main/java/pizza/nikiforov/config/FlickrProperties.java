@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "flickr")
-public class FlickrProperties {
+public class    FlickrProperties {
     private String apiKey;
     private String secret;
 }
