@@ -1,4 +1,4 @@
-package pizza.nikiforov.model;
+package pizza.nikiforov.autotag.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package pizza.nikiforov.service.flickr;
+package pizza.nikiforov.flickr.service;
 
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.RequestContext;

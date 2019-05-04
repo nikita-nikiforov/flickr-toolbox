@@ -1,4 +1,4 @@
-package pizza.nikiforov.service.autotag;
+package pizza.nikiforov.autotag.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import pizza.nikiforov.config.ImaggaProperties;
-import pizza.nikiforov.exception.ImaggaProcessException;
-import pizza.nikiforov.model.TagsResponse;
+import pizza.nikiforov.autotag.exception.ImaggaProcessException;
+import pizza.nikiforov.autotag.model.TagsResponse;
+import pizza.nikiforov.autotag.property.ImaggaProperties;
 
 import java.nio.charset.StandardCharsets;
 

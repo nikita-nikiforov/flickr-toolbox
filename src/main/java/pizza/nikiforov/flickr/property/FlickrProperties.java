@@ -1,4 +1,4 @@
-package pizza.nikiforov.config;
+package pizza.nikiforov.flickr.property;
 
 import lombok.Getter;
 import lombok.Setter;

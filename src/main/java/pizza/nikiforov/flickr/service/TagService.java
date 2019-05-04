@@ -1,4 +1,4 @@
-package pizza.nikiforov.service.flickr;
+package pizza.nikiforov.flickr.service;
 
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.photos.Photo;
@@ -6,10 +6,10 @@ import com.flickr4java.flickr.photos.PhotosInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import pizza.nikiforov.model.TagValue;
-import pizza.nikiforov.model.TagWrapper;
-import pizza.nikiforov.model.TagsResponse;
-import pizza.nikiforov.service.autotag.ImaggaService;
+import pizza.nikiforov.autotag.model.TagValue;
+import pizza.nikiforov.autotag.model.TagWrapper;
+import pizza.nikiforov.autotag.model.TagsResponse;
+import pizza.nikiforov.autotag.service.ImaggaService;
 
 import java.util.Arrays;
 import java.util.Collection;
