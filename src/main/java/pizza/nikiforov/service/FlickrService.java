@@ -8,12 +8,9 @@ import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.auth.AuthInterface;
 import com.flickr4java.flickr.auth.Permission;
 import com.flickr4java.flickr.people.PeopleInterface;
-import com.flickr4java.flickr.photos.Extras;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
-import com.flickr4java.flickr.util.AuthStore;
-import com.flickr4java.flickr.util.FileAuthStore;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.OAuth1Token;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +18,16 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pizza.nikiforov.config.FlickrProperties;
+import pizza.nikiforov.model.Tag;
+import pizza.nikiforov.model.TagValue;
 import pizza.nikiforov.model.TagsResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -120,18 +119,36 @@ public class FlickrService {
 
     private void processPhotos() {
         publicPhotos.stream()
-                .limit(25)
                 .forEach(photo -> {
                     String photoUrl = photo.getMediumUrl();
                     TagsResponse response = imaggaService.getImaggaTagsResponse(photoUrl);
                     log.info("Image: {}", photoUrl);
-                    String[] tags = response.getResult().getTags()
+                    List<TagValue> imaggaTags = response.getResult().getTags()
                             .stream()
                             .filter(tag -> tag.getConfidence() > 25.)
-                            .map(tag -> Arrays.asList(tag.getTag().getEn(), tag.getTag().getRu(), tag.getTag().getUk()))
-                            .flatMap(Collection::stream)
-                            .toArray(String[]::new);
-                    addTagsToFlickrPhoto(photo, tags);
+                            .map(Tag::getTag)
+                            .collect(Collectors.toList());
+                    long numberOfImaggaTags = imaggaTags.stream()
+                            .map(tag -> Arrays.asList(tag.getEn(), tag.getUk(), tag.getRu()))
+                            .mapToLong(Collection::size)
+                            .sum();
+                    String[] tagsToAdd;
+                    if (photo.getTags().size() + numberOfImaggaTags <= 75) {
+                        tagsToAdd = imaggaTags.stream()
+                                .map(tag -> Arrays.asList(tag.getEn(), tag.getRu(), tag.getUk()))
+                                .flatMap(Collection::stream)
+                                .toArray(String[]::new);
+                        log.info("Left all the {} tags.", tagsToAdd.length);
+                    } else {
+                        tagsToAdd = imaggaTags.stream()
+                                .map(TagValue::getEn)
+                                .limit((long) (75 - photo.getTags().size()))
+                                .toArray(String[]::new);
+                        log.info("Left only English {} tags.", tagsToAdd.length);
+                    }
+
+
+                    addTagsToFlickrPhoto(photo, tagsToAdd);
                     sleep();
                 });
     }
