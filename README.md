@@ -27,3 +27,8 @@ It gets only tags with confidence more than 0.25.
 * Finally, these tags are added to your photo.
 
 Sometimes you can see funny Imagga recognition results %)
+
+### Authentication
+To authenticate Imagga, add your *api key* and *api secret* into `application.properties` as follows:
+* `imagga.api-key={your-api-key}`
+* `imagga.api-secret={your-api-secret}`
