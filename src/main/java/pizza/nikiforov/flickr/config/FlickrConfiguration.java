@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import pizza.nikiforov.flickr.property.FlickrProperties;
 
 @Configuration
@@ -23,16 +24,19 @@ public class FlickrConfiguration {
     }
 
     @Bean
+    @DependsOn("flickr")
     public PeopleInterface peopleInterface() {
         return flickr().getPeopleInterface();
     }
 
     @Bean
+    @DependsOn("flickr")
     public PhotosInterface photosInterface() {
         return flickr().getPhotosInterface();
     }
 
     @Bean
+    @DependsOn("flickr")
     public AuthInterface authInterface() {
         return flickr().getAuthInterface();
     }
