@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Log4j2
 @Service
@@ -19,9 +17,15 @@ import java.util.stream.Stream;
 public class PhotoService {
     private final PeopleInterface peopleInterface;
 
-    public List<Photo> getUserPublicPhotos(String nsid) {
+    /**
+     * Returns the first 600 user photos. You need to provide user's id and the set of extras — the data you want
+     * to have with your photos. E.g., your extras can be of two values "tags" and "url_l" and the retrieved photos
+     * will have their tags and large image url.
+     * @param   nsid    user's id
+     * @param   extras  set of extras
+     */
+    public List<Photo> getUserPublicPhotos(String nsid, Set<String> extras) {
         List<Photo> publicPhotos = new ArrayList<>();
-        Set<String> extras = Stream.of("tags, url_l").collect(Collectors.toSet());
         try {
             publicPhotos.addAll(peopleInterface.getPublicPhotos(nsid, extras, 300, 1));
             publicPhotos.addAll(peopleInterface.getPublicPhotos(nsid, extras, 300, 2));

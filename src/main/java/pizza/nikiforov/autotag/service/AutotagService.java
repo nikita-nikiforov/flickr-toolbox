@@ -9,6 +9,9 @@ import pizza.nikiforov.flickr.service.TagService;
 import pizza.nikiforov.flickr.service.UserService;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Log
 @Service
@@ -20,7 +23,8 @@ public class AutotagService {
 
     public void start() {
         String userNsid = userService.getNsid();
-        List<Photo> userPublicPhotos = photoService.getUserPublicPhotos(userNsid);
+        Set<String> extras = Stream.of("tags", "url_l").collect(Collectors.toSet());
+        List<Photo> userPublicPhotos = photoService.getUserPublicPhotos(userNsid, extras);
         tagService.addTagsFromImagga(userPublicPhotos);
     }
 }

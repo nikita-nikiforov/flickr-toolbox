@@ -6,16 +6,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pizza.nikiforov.autotag.service.AutotagService;
+import pizza.nikiforov.geotag.service.GeotaggedPhotoConverter;
 
 @SpringBootApplication
 @RequiredArgsConstructor
 @Log4j2
 public class SpringBootConsoleApplication implements CommandLineRunner {
     private final AutotagService autotagService;
+    private final GeotaggedPhotoConverter geotaggedPhotoConverter;
 
     @Override
     public void run(String... args) {
-        autotagService.start();
+//        autotagService.start();
+        geotaggedPhotoConverter.start();
     }
 
     public static void main(String[] args) {
